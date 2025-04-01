@@ -80,8 +80,12 @@ def get_prediction(team1,team2):
 def home():
     # get the list of all NBA teams for the dropdown
     nba_teams = teams.get_teams()
-    team_list = sorted([{'abbr': team['abbreviation'], 'name': team['full_name']} for team in nba_teams], key = lambda x: x['name'])
-    return render_template('index.html', teams= team_list)
+    team_list = sorted([{
+        'abbr': team['abbreviation'], 
+        'name': team['full_name'], 
+        'id': team['id']  # This is needed for the logo URLs
+    } for team in nba_teams], key=lambda x: x['name'])
+    return render_template('index.html', teams=team_list)
 @app.route('/predict', methods=['POST'])
 def predict():
     team1_abbr = request.form['team1']
